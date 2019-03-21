@@ -1,0 +1,63 @@
+DROP TABLE IF EXISTS project ;
+CREATE TABLE project (id BIGINT AUTO_INCREMENT NOT NULL,
+title VARCHAR,
+status_project VARCHAR,
+description_project VARCHAR,
+moreInfo_project VARCHAR,
+id_companies_project **NOT FOUND**,
+PRIMARY KEY (id)) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS companies ;
+CREATE TABLE companies (id BIGINT AUTO_INCREMENT NOT NULL,
+name_companies VARCHAR,
+contactInfo_companies VARCHAR,
+id_categorie **NOT FOUND**,
+PRIMARY KEY (id)) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS news ;
+CREATE TABLE news (id BIGINT AUTO_INCREMENT NOT NULL,
+title_news VARCHAR,
+content_news VARCHAR,
+url VARCHAR,
+date VARCHAR,
+type_news VARCHAR,
+id_news_companies **NOT FOUND**,
+PRIMARY KEY (id)) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS tags ;
+CREATE TABLE tags (id_tags BIGINT AUTO_INCREMENT NOT NULL,
+description_tags VARCHAR,
+PRIMARY KEY (id_tags)) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS categorie ;
+CREATE TABLE categorie (id_categorie BIGINT AUTO_INCREMENT NOT NULL,
+name_categorie VARCHAR,
+PRIMARY KEY (id_categorie)) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS user ;
+CREATE TABLE user (id_user BIGINT AUTO_INCREMENT NOT NULL,
+pseudo_user VARCHAR,
+password_user VARCHAR,
+id BIGINT,
+id_role **NOT FOUND**,
+PRIMARY KEY (id_user)) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS role ;
+CREATE TABLE role (id_role BIGINT AUTO_INCREMENT NOT NULL,
+name_role VARCHAR,
+PRIMARY KEY (id_role)) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS tags_news ;
+CREATE TABLE tags_news (id BIGINT AUTO_INCREMENT NOT NULL,
+id_tags **NOT FOUND** NOT NULL,
+PRIMARY KEY (id,
+ id_tags)) ENGINE=InnoDB;
+
+ALTER TABLE project ADD CONSTRAINT FK_project_id_companies_project FOREIGN KEY (id_companies_project) REFERENCES companies (id);
+
+ALTER TABLE companies ADD CONSTRAINT FK_companies_id_categorie FOREIGN KEY (id_categorie) REFERENCES categorie (id_categorie);
+ALTER TABLE news ADD CONSTRAINT FK_news_id_news_companies FOREIGN KEY (id_news_companies) REFERENCES companies (id);
+ALTER TABLE user ADD CONSTRAINT FK_user_id FOREIGN KEY (id) REFERENCES companies (id);
+ALTER TABLE user ADD CONSTRAINT FK_user_id_role FOREIGN KEY (id_role) REFERENCES role (id_role);
+ALTER TABLE tags_news ADD CONSTRAINT FK_tags_news_id FOREIGN KEY (id) REFERENCES news (id);
+ALTER TABLE tags_news ADD CONSTRAINT FK_tags_news_id_tags FOREIGN KEY (id_tags) REFERENCES tags (id_tags);
