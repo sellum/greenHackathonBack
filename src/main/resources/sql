@@ -1,57 +1,64 @@
 DROP TABLE IF EXISTS project ;
 CREATE TABLE project (id BIGINT AUTO_INCREMENT NOT NULL,
-title VARCHAR,
-status_project VARCHAR,
-description_project VARCHAR,
-moreInfo_project VARCHAR,
-id_companies_project **NOT FOUND**,
+title VARCHAR(255),
+status_project VARCHAR(255),
+description_project VARCHAR(255),
+moreInfo_project VARCHAR(255),
+id_companies_project BIGINT,
 PRIMARY KEY (id)) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS companies ;
 CREATE TABLE companies (id BIGINT AUTO_INCREMENT NOT NULL,
-name_companies VARCHAR,
-contactInfo_companies VARCHAR,
-id_categorie **NOT FOUND**,
+name_companies VARCHAR(255),
+contactInfo_companies VARCHAR(255),
+id_categorie BIGINT,
 PRIMARY KEY (id)) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS news ;
 CREATE TABLE news (id BIGINT AUTO_INCREMENT NOT NULL,
-title_news VARCHAR,
-content_news VARCHAR,
-url VARCHAR,
-date VARCHAR,
-type_news VARCHAR,
-id_news_companies **NOT FOUND**,
+title_news VARCHAR(255),
+content_news VARCHAR(255),
+url VARCHAR(255),
+date VARCHAR(255),
+type_news VARCHAR(255),
+id_news_companies BIGINT,
 PRIMARY KEY (id)) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS tags ;
 CREATE TABLE tags (id_tags BIGINT AUTO_INCREMENT NOT NULL,
-description_tags VARCHAR,
+description_tags VARCHAR(255),
 PRIMARY KEY (id_tags)) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS categorie ;
 CREATE TABLE categorie (id_categorie BIGINT AUTO_INCREMENT NOT NULL,
-name_categorie VARCHAR,
+name_categorie VARCHAR(255),
 PRIMARY KEY (id_categorie)) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS user ;
 CREATE TABLE user (id_user BIGINT AUTO_INCREMENT NOT NULL,
-pseudo_user VARCHAR,
-password_user VARCHAR,
+pseudo_user VARCHAR(255),
+password_user VARCHAR(255),
 id BIGINT,
-id_role **NOT FOUND**,
+id_role BIGINT,
 PRIMARY KEY (id_user)) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS role ;
 CREATE TABLE role (id_role BIGINT AUTO_INCREMENT NOT NULL,
-name_role VARCHAR,
+name_role VARCHAR(255),
 PRIMARY KEY (id_role)) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS tags_news ;
 CREATE TABLE tags_news (id BIGINT AUTO_INCREMENT NOT NULL,
-id_tags **NOT FOUND** NOT NULL,
+id_tags BIGINT NOT NULL,
 PRIMARY KEY (id,
  id_tags)) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS tags_project;
+CREATE TABLE tags_project (id BIGINT AUTO_INCREMENT NOT NULL,
+id_tags BIGINT NOT NULL,
+PRIMARY KEY (id,
+ id_tags)) ENGINE=InnoDB;
+
 
 ALTER TABLE project ADD CONSTRAINT FK_project_id_companies_project FOREIGN KEY (id_companies_project) REFERENCES companies (id);
 
